@@ -1,16 +1,23 @@
-import { Injectable } from '@nestjs/common';
-import { Station } from './station.model';
-// import * as uuid from 'uuid/v1';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import {Station } from './station.entity';
+import { StationRepository } from './station.repository';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class StationService {
-  private stations = [];
+  constructor(
+    @InjectRepository(StationRepository)
+    private stationRepository: StationRepository,
+  ) {}
 
-  getAllStations(): Station[] {
-    return this.stations;
-  }
+  async getStationById(id: number): Promise<Station> {
+    const foundStation = await this.stationRepository.findOne(id);
 
-  getStationById(id: string): Station {
-    return this.stations.find(station => station.id === id);
+    if (!foundStation) {
+      throw new NotFoundException(`Station with ID "${id}" not found`);
+    }
+
+    return foundStation;
+
   }
 }

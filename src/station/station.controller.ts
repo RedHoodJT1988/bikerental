@@ -1,18 +1,13 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
 import { StationService } from './station.service';
-import { Station } from './station.model';
+import { Station } from './station.entity';
 
 @Controller('station')
 export class StationController {
   constructor(private stationService: StationService) {}
 
-  @Get()  
-  getAllStations(): Station[] {
-    return this.stationService.getAllStations();
-  }
-
   @Get('/:id')
-  getStationById(@Param('id') id: string): Station {
+  getStationById(@Param('id', ParseIntPipe) id: number): Promise<Station> {
     return this.stationService.getStationById(id);
   }
 }
