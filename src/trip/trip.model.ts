@@ -1,5 +1,5 @@
 import { Rider } from '../rider/rider.model';
-import { Station } from 'src/station/station.model';
+import { Station } from 'src/station/station.entity';
 
 export interface Trip {
   date: Date;

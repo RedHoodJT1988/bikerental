@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Trip } from './trip.model';
-import { Station } from '../station/station.model';
+import { Station } from '../station/station.entity';
 
 @Injectable()
 export class TripService {
